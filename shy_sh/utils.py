@@ -23,7 +23,7 @@ def load_history():
         return
     try:
         readline.read_history_file(RL_HISTORY_FILE)
-    except FileNotFoundError:
+    except Exception:
         pass
 
 
