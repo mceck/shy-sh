@@ -18,31 +18,27 @@ classifiers=[
 packages = [{include = "shy_sh"}]
 
 [tool.poetry.dependencies]
-python = "<3.13,>=3.10"
-typer = "^0.15.1"
-langchain = "^0.3.7"
-langgraph = "^0.2.45"
-langchain-groq = "^0.2.1"
-langchain-google-genai = "^2.0.4"
-langchain-aws = "^0.2.6"
-langchain-ollama = "^0.2.0"
-langchain-anthropic = "^0.2.4"
-langchain-openai = "^0.2.6"
-openai = "^1.54.1"
-anthropic = "^0.39.0"
-tiktoken = "^0.8.0"
-pyyaml = "^6.0.1"
-pydantic-settings = "^2.3.4"
+python = "<3.14,>=3.10"
+typer = "^0.15.2"
+langchain = "^0.3.20"
+langgraph = "^0.3.5"
+langchain-groq = "^0.2.5"
+langchain-google-genai = "^2.0.11"
+langchain-aws = "^0.2.15"
+langchain-ollama = "^0.2.3"
+langchain-anthropic = "^0.3.9"
+langchain-openai = "^0.3.8"
+tiktoken = "^0.9.0"
+pyyaml = "^6.0.2"
+pydantic-settings = "^2.8.1"
 pyperclip = "^1.9.0"
-questionary = "^2.0.1"
+questionary = "^2.1.0"
 pyreadline3 = {version = "^3.5.4", platform = "win32"}
 
 [tool.poetry.group.dev.dependencies]
-jupyter = "^1.0.0"
 poetry-bumpversion = "^0.3.2"
 pytest = "^8.3.3"
 pytest-mock = "^3.14.0"
-langchain-community = "^0.3.8"
 
 [tool.poetry.scripts]
 shy = "shy_sh.main:main"
