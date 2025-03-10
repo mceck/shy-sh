@@ -68,7 +68,7 @@ def exec(
         print(f"\n✨: {task}\n")
     try:
         ShyAgent(
-            interactive=interactive,
+            interactive=interactive,  # type: ignore
             ask_before_execute=not no_ask,
         ).start(task)
     except Exception as e:
