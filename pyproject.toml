@@ -39,6 +39,7 @@ pyreadline3 = {version = "^3.5.4", platform = "win32"}
 poetry-bumpversion = "^0.3.2"
 pytest = "^8.3.3"
 pytest-mock = "^3.14.0"
+langchain-community = "^0.3.19"
 
 [tool.poetry.scripts]
 shy = "shy_sh.main:main"
