@@ -22,11 +22,10 @@ python = "<3.14,>=3.10"
 typer = "^0.15.2"
 langchain = "^0.3.20"
 langgraph = "^0.2.76"
-langchain-groq = "^0.2.5"
-langchain-google-genai = "^2.0.11"
-langchain-aws = "^0.2.15"
-langchain-ollama = "^0.2.3"
 langchain-anthropic = "^0.3.9"
+langchain-google-genai = "^2.0.11"
+langchain-groq = "^0.2.5"
+langchain-ollama = "^0.2.3"
 langchain-openai = "^0.3.8"
 tiktoken = "^0.9.0"
 pyyaml = "^6.0.2"
@@ -34,12 +33,19 @@ pydantic-settings = "^2.8.1"
 pyperclip = "^1.9.0"
 questionary = "^2.1.0"
 pyreadline3 = {version = "^3.5.4", platform = "win32"}
+speechrecognition = {version = "^3.14.1", optional = true}
+langchain-aws = {version = "^0.2.15", optional = true}
+
+[tool.poetry.extras]
+audio = ["speechrecognition"]
+aws = ["langchain-aws"]
 
 [tool.poetry.group.dev.dependencies]
 poetry-bumpversion = "^0.3.2"
 pytest = "^8.3.3"
 pytest-mock = "^3.14.0"
 langchain-community = "^0.3.19"
+
 
 [tool.poetry.scripts]
 shy = "shy_sh.main:main"

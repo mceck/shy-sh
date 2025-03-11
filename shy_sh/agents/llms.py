@@ -17,6 +17,7 @@ def _get_llm(llm_config: BaseLLMSchema):
                 model=llm_config.name,
                 temperature=llm_config.temperature,
                 api_key=llm_config.api_key,
+                base_url=llm_config.base_url,
             )
         case "ollama":
             from langchain_ollama import ChatOllama

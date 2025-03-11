@@ -17,6 +17,7 @@ class BaseLLMSchema(BaseModel):
     provider: str
     name: str
     api_key: str = ""
+    base_url: str | None = None
     temperature: float = 0.0
 
 
@@ -113,6 +114,18 @@ def configure_yaml():
         ).unsafe_ask()
     else:
         api_key = settings.llm.api_key
+    base_url = settings.llm.base_url
+    if provider == "openai":
+        base_url = (
+            text(
+                message="Base URL:",
+                default=settings.llm.base_url or "",
+                **_text_style,
+            )
+            .unsafe_ask()
+            .strip()
+        )
+    base_url = base_url or None
     model = input_model(provider, api_key, settings.llm.name)
     agent_pattern = select(
         message="Agent Pattern:",
@@ -131,6 +144,7 @@ def configure_yaml():
         "provider": provider,
         "name": model,
         "api_key": api_key,
+        "base_url": base_url,
         "temperature": float(temperature),
         "agent_pattern": agent_pattern,
     }

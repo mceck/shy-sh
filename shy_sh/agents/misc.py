@@ -66,6 +66,11 @@ def run_few_shot_examples():
     actions = [
         {
             "tool": "shell",
+            "arg": "echo test" if shell in ["powershell", "cmd"] else "echo $SHELL",
+            "thoughts": "I'm checking the current shell",
+        },
+        {
+            "tool": "shell",
             "arg": "echo %cd%" if shell in ["powershell", "cmd"] else "pwd",
             "thoughts": "I'm checking the current working directory",
         },
@@ -78,7 +83,7 @@ def run_few_shot_examples():
     result = []
     result.append(
         HumanMessage(
-            content=f"You are on {os} system using {shell} as shell. Check your tools"
+            content=f"You are on {os} system using {shell} as shell. Check your tools to get started."
         )
     )
     for action in actions:

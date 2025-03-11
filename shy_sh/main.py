@@ -11,11 +11,11 @@ from time import strftime
 
 def exec(
     prompt: Annotated[Optional[list[str]], typer.Argument(allow_dash=False)] = None,
-    interactive: Annotated[
+    oneshot: Annotated[
         Optional[bool],
         typer.Option(
-            "-i",
-            help="Interactive mode [default false if a prompt is passed]",
+            "-o",
+            help="One shot mode",
         ),
     ] = False,
     no_ask: Annotated[
@@ -30,6 +30,13 @@ def exec(
         typer.Option(
             "-e",
             help="Explain the given shell command",
+        ),
+    ] = False,
+    audio: Annotated[
+        Optional[bool],
+        typer.Option(
+            "-a",
+            help="Interactive mode with audio input",
         ),
     ] = False,
     configure: Annotated[
@@ -61,15 +68,14 @@ def exec(
             ask_execute=False,
         )
         return
-
-    if not task:
-        interactive = True
-    else:
+    interactive = not oneshot
+    if task:
         print(f"\n✨: {task}\n")
     try:
         ShyAgent(
-            interactive=interactive,  # type: ignore
+            interactive=interactive,
             ask_before_execute=not no_ask,
+            audio=bool(audio),
         ).start(task)
     except Exception as e:
         print(f"🚨 [bold red]{e}[/bold red]")

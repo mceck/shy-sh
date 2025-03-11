@@ -10,7 +10,7 @@ def test_version(exec):
 
 def test_question(exec, mocker):
     with mock_llm(mocker):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -19,7 +19,7 @@ def test_question(exec, mocker):
 
 def test_interactive_question(exec, mocker):
     with mock_llm(mocker, ["fine thanks"]):
-        result = exec("-i how are you", input="exit\n")
+        result = exec("how are you", input="exit\n")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -36,7 +36,7 @@ def test_use_shell_tool(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -58,7 +58,7 @@ def test_use_shell_tool_with_alternatives(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -79,7 +79,7 @@ def test_use_shell_tool_with_explain(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -96,7 +96,7 @@ def test_use_shell_tool_no_confirmation(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("-x how are you")
+        result = exec("-o -x how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -120,7 +120,7 @@ def test_use_shell_expert_tool(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -142,7 +142,7 @@ def test_use_shell_expert_tool_no_confirmation(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("-x how are you")
+        result = exec("-o -x how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -164,7 +164,7 @@ def test_use_python_expert_tool(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -186,7 +186,7 @@ def test_use_python_expert_tool_no_confirmation(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("-x how are you")
+        result = exec("-o -x how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -204,7 +204,7 @@ def test_use_shell_history_tool(exec, mocker):
             "history readed",
         ],
     ):
-        result = exec("how are you")
+        result = exec("-o how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout
@@ -225,7 +225,7 @@ def test_use_tool_chain(exec, mocker):
             "fine thanks",
         ],
     ):
-        result = exec("-x how are you")
+        result = exec("-o -x how are you")
         assert result.exit_code == 0
 
         assert "✨: how are you" in result.stdout

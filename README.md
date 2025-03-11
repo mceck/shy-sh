@@ -27,7 +27,6 @@ prompt [PROMPT]
 
 Options
 
-- -i Interactive mode [default false if a prompt is passed else true]
 - -x Do not ask confirmation before executing scripts
 - -e Explain the given shell command
 - --configure Configure LLM
