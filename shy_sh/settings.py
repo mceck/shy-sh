@@ -198,12 +198,10 @@ def input_model(provider: str, api_key: str, default_model: str | None = None):
                     **_select_style,
                 ).unsafe_ask()
             case "google":
-                from google.generativeai.client import glm
+                from google.ai.generativelanguage import ModelServiceClient
                 from google.auth.api_key import Credentials
 
-                r = glm.ModelServiceClient(
-                    credentials=Credentials(api_key)
-                ).list_models()
+                r = ModelServiceClient(credentials=Credentials(api_key)).list_models()
                 model_list = [l.name.replace("models/", "", 1) for l in r]
                 return select(
                     message="Model:",
