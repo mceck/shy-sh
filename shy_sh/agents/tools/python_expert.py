@@ -25,10 +25,10 @@ def python_expert(arg: str, state: Annotated[State, InjectedState]):
     code = ""
     with Live(vertical_overflow="visible") as live:
         for chunk in pyexpert_chain.stream(inputs):
-            code += chunk
-            live.update(syntax(code, "python", "command"))
+            code += chunk  # type: ignore
+            live.update(syntax(code, "python"))
         code = parse_code(code)
-        live.update(syntax(code.strip(), "python", "command"))
+        live.update(syntax(code.strip(), "python"))
 
     confirm = "y"
     if state["ask_before_execute"]:

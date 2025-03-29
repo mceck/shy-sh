@@ -2,10 +2,11 @@ from langchain_core.messages import AIMessage
 from shy_sh.settings import settings
 from shy_sh.models import State
 from shy_sh.agents.llms import get_llm_context
-from shy_sh.utils import count_tokens, syntax
+from shy_sh.utils import count_tokens
 from shy_sh.agents.chains.shy_agent import shy_agent_chain
 from shy_sh.agents.misc import has_tool_calls
 from rich.live import Live
+from rich.markdown import Markdown
 
 console_theme = {
     "lexer": "console",
@@ -22,13 +23,13 @@ def chatbot(state: State):
     with Live(vertical_overflow="visible") as live:
         live.update(loading_str)
         for chunk in shy_agent_chain.stream({**state, "history": history}):
-            final_message = chunk if final_message is None else final_message + chunk
+            final_message = chunk if final_message is None else final_message + chunk  # type: ignore
             message = _parse_chunk_message(final_message)
             if _maybe_have_tool_calls(final_message, message):
                 live.update(loading_str)
             else:
                 live.update(
-                    syntax(f"🤖: {message}"),
+                    Markdown(f"🤖: {message}"),
                     refresh=True,
                 )
         message = _parse_chunk_message(final_message)
@@ -39,7 +40,7 @@ def chatbot(state: State):
         if not message or (settings.llm.agent_pattern == "react" and has_tools):
             live.update("")
         else:
-            live.update(syntax(f"\n🤖: {message}{'\n' if has_tools else ''}"))
+            live.update(Markdown(f"\n🤖: {message}{'\n' if has_tools else ''}"))
     return {"tool_history": [ai_message]}
 
 

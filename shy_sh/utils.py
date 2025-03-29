@@ -70,23 +70,12 @@ def ask_confirm(explain=True, alternatives=False) -> Literal["y", "n", "c", "e",
     return ret  # type: ignore
 
 
-PRINT_THEMES = {
-    "response": {
-        "theme": "one-dark",
-        "background_color": "#181818",
-    },
-    "command": {
-        "background_color": "#212121",
-    },
-}
-
-
-def syntax(text: str, lexer: str = "console", theme: str = "response"):
+def syntax(text: str, lexer: str = "console"):
     return Syntax(
         text,
         lexer,
         word_wrap=True,
-        **PRINT_THEMES.get(theme, {}),  # type: ignore
+        background_color="default",
     )
 
 

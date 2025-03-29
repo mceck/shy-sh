@@ -3,11 +3,12 @@ from langchain_core.runnables import chain
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import ChatPromptTemplate
 from shy_sh.agents.llms import get_llm
-from shy_sh.utils import ask_confirm, syntax
+from shy_sh.utils import ask_confirm
 from shy_sh.models import ToolMeta
 from shy_sh.settings import settings
 from textwrap import dedent
 from rich.live import Live
+from rich.markdown import Markdown
 from rich import print
 
 
@@ -16,7 +17,7 @@ msg_template = dedent(
     The given task was {task}.
     Explain this {script_type} and why it should solve the task{lang_spec}.
     Be concise and please limit your explanation to the provided {script_type} and avoid suggesting alternative solutions or directly referencing the given task.
-
+    You can use markdown formatting to enhance the explanation.
     ```
     {script}
     ```
@@ -51,7 +52,7 @@ def explain(inputs, ask_execute=True, ask_alternative=False):
             }
         ):
             text += chunk
-            live.update(syntax(text))
+            live.update(Markdown(text))
     print()
 
     if not ask_execute:

@@ -31,10 +31,10 @@ def shell_expert(arg: str, state: Annotated[State, InjectedState]):
     with Live(vertical_overflow="visible") as live:
         for chunk in shexpert_chain.stream(inputs):
             code += chunk  # type: ignore
-            live.update(syntax(code, theme="command"))
+            live.update(syntax(code))
 
         code = parse_code(code)
-        live.update(syntax(code.strip(), theme="command"))
+        live.update(syntax(code.strip()))
 
     confirm = "y"
     if state["ask_before_execute"]:
