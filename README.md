@@ -41,7 +41,7 @@ shy --configure
  Agent Pattern: react
  Temperature: 0.0
  Language: klingon
- Safe Mode: Yes
+ Sandbox Mode: Yes
 ```
 
 #### Configurable settings
@@ -52,7 +52,7 @@ shy --configure
 - Agent Pattern: react or function_call. (If you are not using OpenAI, Anthropic or Google, react is recommended)
 - Temperature: The LLM model's temperature setting.
 - Language: The language for the LLM's final answers.
-- Safe Mode: When enabled, no commands or scripts will be executed on your system; you will only receive suggestions. This feature is recommended for beginners.
+- Sandbox Mode: When enabled, no commands or scripts will be executed on your system; you will only receive suggestions. This feature is recommended for beginners.
 
 All the settings are saved in `~/.config/shy/config.yml`
 

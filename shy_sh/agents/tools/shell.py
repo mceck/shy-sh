@@ -60,7 +60,7 @@ def shell(arg: str, state: Annotated[State, InjectedState]):
             return "Command interrupted by the user", ToolMeta(
                 stop_execution=True, skip_print=True
             )
-        if settings.safe_mode:
+        if settings.sandbox_mode:
             pyperclip.copy(r)
             return "Command copied to the clipboard!", ToolMeta(stop_execution=True)
         arg = r
@@ -109,7 +109,7 @@ def _select_alternative_command(arg, state):
     r = select(
         (
             "Pick the command to copy to the clipboard"
-            if settings.safe_mode
+            if settings.sandbox_mode
             else "Pick the command to execute"
         ),
         choices=[

@@ -29,7 +29,7 @@ class _Settings(BaseModel):
     llm: LLMSchema = LLMSchema(provider="ollama", name="llama3.2")
 
     language: str = ""
-    safe_mode: bool = False
+    sandbox_mode: bool = False
 
 
 class Settings(BaseSettings, _Settings):
@@ -150,9 +150,9 @@ def configure_yaml():
     }
 
     language = text("Language:", default=settings.language, **_text_style).unsafe_ask()
-    safe_mode = confirm(
-        "Safe Mode:",
-        default=settings.safe_mode,
+    sandbox_mode = confirm(
+        "Sandbox Mode:",
+        default=settings.sandbox_mode,
         **_text_style,
     ).unsafe_ask()
 
@@ -164,7 +164,7 @@ def configure_yaml():
                 {
                     "llm": llm,
                     "language": language,
-                    "safe_mode": safe_mode,
+                    "sandbox_mode": sandbox_mode,
                 }
             )
         )

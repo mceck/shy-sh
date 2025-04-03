@@ -46,21 +46,21 @@ def ask_confirm(explain=True, alternatives=False) -> Literal["y", "n", "c", "e",
         choices.extend(["e", "explain"])
     if alternatives:
         choices.extend(["a", "alternatives"])
-    if not settings.safe_mode:
+    if not settings.sandbox_mode:
         choices.extend(["y", "yes"])
 
     ret = Prompt.ask(
         f"""\n [dark_orange]{ 
-            'Do you need more details?' if settings.safe_mode else 'Do you want to execute this command?'
+            'Do you need more details?' if settings.sandbox_mode else 'Do you want to execute this command?'
             }[/] [bold magenta][{
-            '[underline]C[/]opy/[underline]n[/]o' if settings.safe_mode else '[underline]Y[/]es/[underline]n[/]o/[underline]c[/]opy'
+            '[underline]C[/]opy/[underline]n[/]o' if settings.sandbox_mode else '[underline]Y[/]es/[underline]n[/]o/[underline]c[/]opy'
             }{
             '/[underline]e[/]xplain' if explain else ''
             }{
             '/[underline]a[/]lternatives' if alternatives else ''
             }][/]""",
         choices=choices,
-        default="c" if settings.safe_mode else "y",
+        default="c" if settings.sandbox_mode else "y",
         show_default=False,
         show_choices=False,
         case_sensitive=False,
