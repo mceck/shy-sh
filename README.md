@@ -125,6 +125,15 @@ In conclusion, the command presents the total count of Python files (*.py) locat
 
 ![image_ascii](./docs/images/ascii.gif)
 
+## Chat commands
+
+You can use these commands during the chat:
+
+- `/chats` to list all the chats
+- `/clear` to clear the current chat
+- `/history` to list the recent executed commands/scripts
+- `/load [CHAT_ID]` to continue a previous chat
+
 ## Privacy
 
 If you are not using Ollama as provider, please note that information such as the current path, your operating system name, and the last commands executed in the shell may be included in the LLM context.

@@ -35,6 +35,7 @@ questionary = "^2.1.0"
 pyreadline3 = {version = "^3.5.4", platform = "win32"}
 speechrecognition = {version = "^3.14.1", optional = true}
 langchain-aws = {version = "^0.2.15", optional = true}
+tzlocal = "^5.3.1"
 
 [tool.poetry.extras]
 audio = ["speechrecognition"]

@@ -17,6 +17,13 @@ class FinalResponse(BaseModel):
 class ToolMeta(BaseModel):
     stop_execution: bool = False
     skip_print: bool = False
+    executed_scripts: list[dict] = []
+
+
+def append(left: list, right: list, **kwargs) -> list:
+    """Append right to left and return the result"""
+    left.extend(right)
+    return left
 
 
 class State(TypedDict):
@@ -27,3 +34,4 @@ class State(TypedDict):
     few_shot_examples: Annotated[list, add_messages] = []
     history: Annotated[list, add_messages] = []
     tool_history: Annotated[list, add_messages] = []
+    executed_scripts: Annotated[list, append] = []

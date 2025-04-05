@@ -86,15 +86,17 @@ def shell(arg: str, state: Annotated[State, InjectedState]):
             )
         elif ret:
             return ret
-
-    result += run_command(arg)
+    output = run_command(arg)
+    result += output
 
     if len(result) > 20000:
         print("\n🐳 [bold red]Output too long! It will be truncated[/bold red]")
         result = (
             result[:9000] + "\n...(OUTPUT TOO LONG TRUNCATED!)...\n" + result[-9000:]
         )
-    return result, ToolMeta()
+    return result, ToolMeta(
+        executed_scripts=[{"script": arg, "type": "shell", "result": output}]
+    )
 
 
 def _select_alternative_command(arg, state):

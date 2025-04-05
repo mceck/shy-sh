@@ -88,5 +88,7 @@ def python_expert(arg: str, state: Annotated[State, InjectedState]):
         ret = f"Output:\n{result}"
     return (
         ret,
-        ToolMeta(),
+        ToolMeta(
+            executed_scripts=[{"script": code, "type": "python", "result": result}]
+        ),
     )

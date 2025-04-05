@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 import re
 import os
 import platform
@@ -253,3 +254,21 @@ def get_shell_history():
 def parse_code(code):
     code = re.sub(r"```[^\n]*\n", "", code)
     return code[: code.rfind("```")]
+
+
+def to_local(date: datetime):
+    try:
+        import tzlocal
+
+        local_tz = tzlocal.get_localzone()
+        return date.replace(tzinfo=UTC).astimezone(local_tz)
+    except Exception:
+        return date
+
+
+SUGGESTIONS = ["/chats", "/clear", "/history", "/load ", "quit"]
+
+
+def command_completer(text, state):
+    matches = [s for s in SUGGESTIONS if s.startswith(text)]
+    return matches[state] if state < len(matches) else None

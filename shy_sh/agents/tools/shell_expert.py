@@ -98,4 +98,6 @@ def shell_expert(arg: str, state: Annotated[State, InjectedState]):
     ret = f"Script executed:\n{code}\n\nOutput:\n{result}"
     if len(ret) > 20000:
         ret = f"Output:\n{result}"
-    return ret, ToolMeta()
+    return ret, ToolMeta(
+        executed_scripts=[{"script": code, "type": "shell_script", "result": result}]
+    )

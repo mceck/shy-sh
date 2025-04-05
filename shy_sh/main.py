@@ -2,6 +2,7 @@ import typer
 from typing import Optional, Annotated
 from importlib.metadata import version
 from shy_sh.agents.shy_agent.agent import ShyAgent
+from shy_sh.manager.history import truncate_chats
 from shy_sh.settings import settings, configure_yaml
 from shy_sh.agents.chains.explain import explain as do_explain
 from shy_sh.utils import load_history
@@ -83,9 +84,13 @@ def exec(
 
 def main():
     try:
+        truncate_chats(1000)
         import readline
 
-        readline.set_history_length(20)
+        readline.set_history_length(100)
+        readline.set_completer_delims(" \t\n")
+        readline.parse_and_bind("tab: complete")
+        readline.parse_and_bind("set show-all-if-unmodified on")
     except Exception:
         pass
     load_history()

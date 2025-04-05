@@ -12,6 +12,7 @@ def tools_handler(state: State):
     t_calls = _get_tool_calls(last_message)
 
     tool_answers = []
+    executed_scripts = []
     for t_call in t_calls:
         try:
             t = tools_by_name[t_call["name"]]
@@ -30,7 +31,9 @@ def tools_handler(state: State):
             m.artifact = getattr(message, "artifact", None)
             message = m
         tool_answers.append(message)
-    return {"tool_history": tool_answers}
+        if hasattr(message, "artifact") and message.artifact.executed_scripts:
+            executed_scripts += message.artifact.executed_scripts
+    return {"tool_history": tool_answers, "executed_scripts": executed_scripts}
 
 
 def _get_react_tool_calls(message):
