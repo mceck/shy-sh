@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 import re
 import os
 import platform
@@ -261,7 +261,7 @@ def to_local(date: datetime):
         import tzlocal
 
         local_tz = tzlocal.get_localzone()
-        return date.replace(tzinfo=UTC).astimezone(local_tz)
+        return date.replace(tzinfo=timezone.utc).astimezone(local_tz)
     except Exception:
         return date
 

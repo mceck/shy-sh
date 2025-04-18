@@ -52,7 +52,7 @@ def python_expert(arg: str, state: Annotated[State, InjectedState]):
         if ret:
             return ret
 
-    if sys.version_info >= (3, 11):
+    if sys.version_info >= (3, 12):
         with NamedTemporaryFile("w+", suffix=".py", delete_on_close=False) as file:
             file.write(code)
             file.close()
@@ -68,7 +68,7 @@ def python_expert(arg: str, state: Annotated[State, InjectedState]):
                 )
 
     else:
-        with NamedTemporaryFile("w+", suffix=ext, delete=False) as file:
+        with NamedTemporaryFile("w+", suffix=".py", delete=False) as file:
             file.write(code)
             file.close()
             os.chmod(file.name, 0o755)

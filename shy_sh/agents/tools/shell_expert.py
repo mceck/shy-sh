@@ -64,7 +64,7 @@ def shell_expert(arg: str, state: Annotated[State, InjectedState]):
     elif shell == "powershell":
         ext = ".ps1"
 
-    if sys.version_info >= (3, 11):
+    if sys.version_info >= (3, 12):
         with NamedTemporaryFile("w+", suffix=ext, delete_on_close=False) as file:
             file.write(code)
             file.close()

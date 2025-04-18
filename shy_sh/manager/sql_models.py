@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from datetime import UTC, datetime
+from datetime import datetime
 import os
 from sqlalchemy import DateTime, Text, create_engine, JSON, ForeignKey
 from sqlalchemy.orm import (
@@ -22,7 +22,7 @@ class Chat(Base):
     messages: Mapped[list[dict]] = mapped_column(JSON)
     meta: Mapped[dict] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(UTC)
+        DateTime, default=lambda: datetime.utcnow()
     )
 
     executed_scripts: Mapped[list["ExecutedScript"]] = relationship(
@@ -44,7 +44,7 @@ class ExecutedScript(Base):
     script: Mapped[str] = mapped_column(Text)
     result: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(UTC)
+        DateTime, default=lambda: datetime.utcnow()
     )
 
     chat_id: Mapped[int] = mapped_column(ForeignKey("chat.id"))
