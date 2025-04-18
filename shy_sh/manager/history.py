@@ -21,7 +21,7 @@ def print_chat_history():
                 f"  Model: {chat.meta.get('provider', '')} - {chat.meta.get('name', 'Unknown')}"
             )
             print(f"  Messages: {len(chat.messages)}")
-            print(f"  Created: {to_local(chat.created_at).strftime("%Y-%m-%d %H:%M")}")
+            print(f"  Created: {to_local(chat.created_at).strftime('%Y-%m-%d %H:%M')}")
 
 
 _MESSAGE_MAP = {
