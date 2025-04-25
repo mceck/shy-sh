@@ -1,7 +1,9 @@
+from shy_sh.agents.misc import has_tool_calls, parse_react_tool
 from shy_sh.manager.sql_models import ExecutedScript, ScriptType, session
 from shy_sh.manager.chat_manager import ChatManager
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, BaseMessage
 from rich import print
+from rich.markdown import Markdown
 
 from shy_sh.utils import syntax, to_local
 
@@ -44,6 +46,31 @@ def load_chat_history(chat_id: int) -> list[BaseMessage]:
         if not chat:
             return []
         return _serialize_messages(chat.messages)
+
+
+def print_chat(chat_id: int):
+    hist = load_chat_history(chat_id)
+    print(Markdown("---"))
+    print()
+    for message in hist:
+        if hasattr(message, "tool_calls") and len(message.tool_calls) > 0:  # type: ignore
+            print(syntax(message.tool_calls[0]["args"].get("arg")))  # type: ignore
+            print()
+        else:
+            try:
+                rtool = parse_react_tool(message)
+            except Exception:
+                rtool = None
+            if rtool:
+                print(syntax(rtool.arg))
+            else:
+                avatar = "✨" if isinstance(message, HumanMessage) else "🤖"
+                msg = str(message.content)
+                if msg.startswith("Tool response:"):
+                    msg = msg[14:].strip()
+                print(Markdown(f"{avatar}: {msg}"))
+            print()
+    print(Markdown("---"))
 
 
 def print_recent_commands(

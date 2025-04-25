@@ -1,4 +1,4 @@
-from sqlalchemy import select, func
+from sqlalchemy import delete, select, func
 from sqlalchemy.orm import Session
 from shy_sh.manager.sql_models import Chat, ExecutedScript, ScriptType
 
@@ -52,8 +52,10 @@ class ChatManager:
             self.session.add(chat)
 
     def truncate_chats(self, keep: int = 100):
-        chats = (
-            self.session.execute(select(Chat).order_by(Chat.created_at)).scalars().all()
+        self.session.execute(
+            delete(Chat).where(
+                Chat.id.not_in(
+                    select(Chat.id).order_by(Chat.created_at.desc()).limit(keep)
+                )
+            )
         )
-        for chat in chats[:-10]:
-            self.session.delete(chat)

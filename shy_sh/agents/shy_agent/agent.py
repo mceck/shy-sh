@@ -8,6 +8,7 @@ from shy_sh.manager.history import (
     load_chat_history,
     print_chat_history,
     save_chat_history,
+    print_chat,
 )
 from shy_sh.utils import command_completer, save_history
 from langchain_core.messages import HumanMessage
@@ -58,6 +59,19 @@ class ShyAgent:
                 self.executed_scripts = []
                 self.chat_id = None
                 print("🤖: New chat started")
+                return True
+            case command if command.startswith("chat "):
+                try:
+                    print_chat(int(command[5:]))
+                except ValueError:
+                    print(f"🚨 [bold red]Invalid chat ID {command[5:]}[/]")
+                return True
+            case command if command.startswith("c "):
+                try:
+                    print()
+                    print_chat(int(command[2:]))
+                except ValueError:
+                    print(f"🚨 [bold red]Invalid chat ID {command[2:]}[/]")
                 return True
             case command if command.startswith("load "):
                 try:
