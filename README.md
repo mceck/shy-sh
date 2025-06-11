@@ -30,6 +30,10 @@ Options
 - -x Do not ask confirmation before executing scripts
 - -e Explain the given shell command
 - --configure Configure LLM
+- --push-config $name Backup current config
+- --pull-config $name Restore config from backup
+- --list-configs List available configs
+- --del-config $name Delete a config
 - --help Show this message and exit.
 
 ## Settings

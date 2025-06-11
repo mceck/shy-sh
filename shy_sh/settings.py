@@ -2,7 +2,7 @@ import os
 import yaml
 
 from typing import Type, Any, Literal
-
+from shutil import copyfile
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -97,6 +97,50 @@ def _try_float(x):
         return True
     except ValueError:
         return "Please enter a valid number"
+
+
+def push_settings_file(name):
+    file_name = get_or_create_settings_path()
+    new_settings = f"{file_name}.{name}"
+    copyfile(file_name, new_settings)
+    print(f"Settings saved to {new_settings}")
+
+
+def pull_settings_file(name):
+    file_name = get_or_create_settings_path()
+    new_settings = f"{file_name}.{name}"
+    if os.path.exists(new_settings):
+        copyfile(new_settings, file_name)
+        print(f"Settings restored from {new_settings}")
+    else:
+        print(f"No settings file found with name {name}")
+        list_settings_files()
+
+
+def list_settings_files():
+    file_name = get_or_create_settings_path()
+    files = [
+        f for f in os.listdir(os.path.dirname(file_name)) if f.startswith("config.")
+    ]
+    if not files:
+        print("No settings files found.")
+        return
+    print("Available settings files:")
+    for f in files:
+        name = f.split(".")[-1]
+        if name != "yaml" and name != "yml":
+            print(f" - {name}")
+
+
+def delete_settings_file(name):
+    file_name = get_or_create_settings_path()
+    new_settings = f"{file_name}.{name}"
+    if os.path.exists(new_settings):
+        os.remove(new_settings)
+        print(f"Settings file {new_settings} deleted.")
+    else:
+        print(f"No settings file found with name {name}")
+        list_settings_files()
 
 
 def configure_yaml():

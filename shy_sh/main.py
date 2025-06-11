@@ -3,7 +3,14 @@ from typing import Optional, Annotated
 from importlib.metadata import version
 from shy_sh.agents.shy_agent.agent import ShyAgent
 from shy_sh.manager.history import truncate_chats
-from shy_sh.settings import settings, configure_yaml
+from shy_sh.settings import (
+    delete_settings_file,
+    list_settings_files,
+    pull_settings_file,
+    push_settings_file,
+    settings,
+    configure_yaml,
+)
 from shy_sh.agents.chains.explain import explain as do_explain
 from shy_sh.utils import load_history
 from rich import print
@@ -43,6 +50,18 @@ def exec(
     configure: Annotated[
         Optional[bool], typer.Option("--configure", help="Configure LLM")
     ] = False,
+    push_config: Annotated[
+        Optional[str], typer.Option("--push-config", help="Backup current config")
+    ] = None,
+    pull_config: Annotated[
+        Optional[str], typer.Option("--pull-config", help="Restore config from backup")
+    ] = None,
+    list_configs: Annotated[
+        Optional[bool], typer.Option("--list-configs", help="List available configs")
+    ] = False,
+    del_config: Annotated[
+        Optional[str], typer.Option("--del-config", help="Delete a config")
+    ] = None,
     display_version: Annotated[
         Optional[bool], typer.Option("--version", help="Show version")
     ] = False,
@@ -52,6 +71,18 @@ def exec(
         return
     if configure:
         configure_yaml()
+        return
+    if push_config:
+        push_settings_file(push_config)
+        return
+    if pull_config:
+        pull_settings_file(pull_config)
+        return
+    if list_configs:
+        list_settings_files()
+        return
+    if del_config:
+        delete_settings_file(del_config)
         return
     task = " ".join(prompt or [])
     print(f"[bold italic dark_orange]{settings.llm.provider} - {settings.llm.name}[/]")
