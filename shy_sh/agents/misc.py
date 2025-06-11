@@ -50,7 +50,11 @@ def parse_react_tool(message):
 
 def has_tool_calls(message):
     if settings.llm.agent_pattern == "function_call":
-        return bool(getattr(message, "tool_calls", None))
+        if bool(getattr(message, "tool_calls", None)):
+            return True
+    elif settings.llm.agent_pattern == "flow":
+        if (message.content or "").count("```") >= 2:
+            return True
     elif settings.llm.agent_pattern == "react":
         try:
             parse_react_tool(message)
@@ -60,7 +64,29 @@ def has_tool_calls(message):
     return False
 
 
+def run_flow_few_shot_examples():
+    shell = detect_shell()
+    os = detect_os()
+    pwd_cmd = "echo %cd%" if shell in ["powershell", "cmd"] else "pwd"
+    return [
+        HumanMessage(
+            content=f"You are on {os} system using {shell} as shell. To begin check the current directory and if you are in a git repository."
+        ),
+        AIMessage(
+            content=f"Ok, to check the shell, I will run:\n```{shell}\n{ pwd_cmd}\n```\nthis command will return the current working directory."
+        ),
+        HumanMessage(content=run_shell(pwd_cmd)),
+        AIMessage(
+            content=f"Let's see if we are in a git repository\n```{shell}\ngit rev-parse --abbrev-ref HEAD\n```"
+        ),
+        HumanMessage(content=run_shell("git rev-parse --abbrev-ref HEAD")),
+        AIMessage(content="Well done! 👍\nDo you need anything else?"),
+    ]
+
+
 def run_few_shot_examples():
+    if settings.llm.agent_pattern == "flow":
+        return run_flow_few_shot_examples()
     shell = detect_shell()
     os = detect_os()
     actions = [

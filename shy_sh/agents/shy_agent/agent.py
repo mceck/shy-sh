@@ -126,7 +126,7 @@ class ShyAgent:
                 new_task = input("\n✨: ")
                 self._dispose_autocomplete()
             while new_task.endswith("\\"):
-                new_task = new_task[:-1] + "\n" + input("    ")
+                new_task = new_task[:-1] + "\n" + input("  > ")
             save_history()
 
             if new_task == "exit" or new_task == "quit" or new_task == "q":

@@ -38,7 +38,7 @@ Options
 shy --configure
  Provider: ollama
  Model: llama3.2
- Agent Pattern: react
+ Agent Pattern: flow
  Temperature: 0.0
  Language: klingon
  Sandbox Mode: Yes
@@ -49,7 +49,7 @@ shy --configure
 - Provider: The LLM provider to use [OpenAI, Anthropic, Google, Groq, AWS Bedrock, Ollama(local)].
 - API Key: The API key for the LLM provider. (Format for aws bedrock: `region_name acces_key secret_key`)
 - Model: The LLM model to use.
-- Agent Pattern: react or function_call. (If you are not using OpenAI, Anthropic or Google, react is recommended)
+- Agent Pattern: flow or react or function_call. It defines how the agent will interact with the LLM.
 - Temperature: The LLM model's temperature setting.
 - Language: The language for the LLM's final answers.
 - Sandbox Mode: When enabled, no commands or scripts will be executed on your system; you will only receive suggestions. This feature is recommended for beginners.

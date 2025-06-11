@@ -165,10 +165,12 @@ def run_command(cmd: str):
         for chunk in stream_shell(cmd):
             print(chunk, end="", flush=True)
             result += chunk
+        result = result.strip()
         result = result or "Exit code: 0"
     else:
         ret_code, result = run_pty(cmd)
-        result = result or f"Exit code: {ret_code}"
+        result = result.strip()
+        result = f"Exit code: {ret_code}\n{result}"
     return result
 
 

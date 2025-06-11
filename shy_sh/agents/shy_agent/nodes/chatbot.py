@@ -25,11 +25,13 @@ def chatbot(state: State):
         for chunk in shy_agent_chain.stream({**state, "history": history}):
             final_message = chunk if final_message is None else final_message + chunk  # type: ignore
             message = _parse_chunk_message(final_message)
+            if settings.llm.agent_pattern == "flow" and message.count("```") >= 2:
+                break
             if _maybe_have_tool_calls(final_message, message):
                 live.update(loading_str)
             else:
                 live.update(
-                    Markdown(f"🤖: {message}"),
+                    Markdown(f"🤖:\n{message}"),
                     refresh=True,
                 )
         message = _parse_chunk_message(final_message)
@@ -41,7 +43,7 @@ def chatbot(state: State):
             live.update("")
         else:
             nl = "\n" if has_tools else ""
-            live.update(Markdown(f"\n🤖: {message}{nl}"))
+            live.update(Markdown(f"\n🤖:\n{message}{nl}"))
     return {"tool_history": [ai_message]}
 
 

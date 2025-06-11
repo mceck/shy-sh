@@ -22,7 +22,7 @@ class BaseLLMSchema(BaseModel):
 
 
 class LLMSchema(BaseLLMSchema):
-    agent_pattern: Literal["function_call", "react"] = "react"
+    agent_pattern: Literal["function_call", "react", "flow"] = "flow"
 
 
 class _Settings(BaseModel):
@@ -129,7 +129,7 @@ def configure_yaml():
     model = input_model(provider, api_key, settings.llm.name)
     agent_pattern = select(
         message="Agent Pattern:",
-        choices=["function_call", "react"],
+        choices=["flow", "function_call", "react"],
         default=settings.llm.agent_pattern,
         **_select_style,
     ).unsafe_ask()
