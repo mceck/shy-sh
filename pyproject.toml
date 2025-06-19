@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shy_sh"
-version = "1.3.2"
+version = "1.3.3"
 description = "Shell copilot - sh shell AI copilot"
 authors = ["Mattia Cecchini <matcecco@gmail.com>"]
 license = "MIT"
