@@ -40,7 +40,7 @@ class ExecutedScript(Base):
     __tablename__ = "executed_script"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped[ScriptType]
+    type: Mapped[str]
     script: Mapped[str] = mapped_column(Text)
     result: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(

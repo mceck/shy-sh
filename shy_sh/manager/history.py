@@ -84,7 +84,7 @@ def print_recent_commands(
             if len(script) > 100:
                 script = script[:100] + "..."
             print(
-                f"\n[magenta][{kind.name}][/] {to_local(created_at).strftime('%Y-%m-%d %H:%M')}"
+                f"\n[magenta][{kind}][/] {to_local(created_at).strftime('%Y-%m-%d %H:%M')}"
             )
             print(
                 syntax(
