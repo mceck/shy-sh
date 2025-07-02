@@ -26,7 +26,7 @@ class LLMSchema(BaseLLMSchema):
 
 
 class _Settings(BaseModel):
-    llm: LLMSchema = LLMSchema(provider="ollama", name="llama3.2")
+    llm: LLMSchema = LLMSchema(provider="ollama", name="gemma3n")
 
     language: str = ""
     sandbox_mode: bool = False
@@ -102,6 +102,15 @@ def _try_float(x):
 def push_settings_file(name):
     file_name = get_or_create_settings_path()
     new_settings = f"{file_name}.{name}"
+    if (
+        os.path.exists(new_settings)
+        and not confirm(
+            f"Settings '{name}' already exists. Do you want to overwrite it?"
+        ).unsafe_ask()
+    ):
+        print("Settings file not saved.")
+        return
+
     copyfile(file_name, new_settings)
     print(f"Settings saved to {new_settings}")
 

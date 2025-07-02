@@ -48,22 +48,24 @@ def exec(
         ),
     ] = False,
     configure: Annotated[
-        Optional[bool], typer.Option("--configure", help="Configure LLM")
+        Optional[bool], typer.Option("--configure", "-c", help="Configure LLM")
     ] = False,
     push_config: Annotated[
-        Optional[str], typer.Option("--push-config", help="Backup current config")
+        Optional[str], typer.Option("--push-config", "-s", help="Backup current config")
     ] = None,
     pull_config: Annotated[
-        Optional[str], typer.Option("--pull-config", help="Restore config from backup")
+        Optional[str],
+        typer.Option("--pull-config", "-p", help="Restore config from backup"),
     ] = None,
     list_configs: Annotated[
-        Optional[bool], typer.Option("--list-configs", help="List available configs")
+        Optional[bool],
+        typer.Option("--list-configs", "-l", help="List available configs"),
     ] = False,
     del_config: Annotated[
-        Optional[str], typer.Option("--del-config", help="Delete a config")
+        Optional[str], typer.Option("--del-config", "-d", help="Delete a config")
     ] = None,
     display_version: Annotated[
-        Optional[bool], typer.Option("--version", help="Show version")
+        Optional[bool], typer.Option("--version", "-v", help="Show version")
     ] = False,
 ):
     if display_version:

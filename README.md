@@ -41,11 +41,11 @@ Options
 ```sh
 shy --configure
  Provider: ollama
- Model: llama3.2
+ Model: gemma3n
  Agent Pattern: flow
  Temperature: 0.0
  Language: klingon
- Sandbox Mode: Yes
+ Sandbox Mode: No
 ```
 
 #### Configurable settings
